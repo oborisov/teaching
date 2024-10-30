@@ -1,0 +1,17 @@
+Materials for the colloquium.
+
+- Genome-wide association studies (primer):
+  -https://www.nature.com/articles/s43586-021-00056-9
+- Databases of genotype-phenotype associations:
+  - GWAS Catalog (common variants): https://www.ebi.ac.uk/gwas/
+  - Open Targets Genetics (common variants): https://genetics.opentargets.org/
+  - AstraZeneca PheWAS Portal (rare variants): https://azphewas.com/
+- Colocalization:
+  Bayesian Test for Colocalisation: https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004383
+  "coloc" R package: https://chr1swallace.github.io/coloc/
+- Molecular biobanks:
+  - UK Biobank: https://www.ukbiobank.ac.uk/
+  - All of Us: https://allofus.nih.gov/
+  - FinnGen: https://www.finngen.fi/en
+  - NAKO Gesundheitsstudie: https://nako.de/
+
