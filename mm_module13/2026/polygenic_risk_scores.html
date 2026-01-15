@@ -430,16 +430,18 @@
             border-radius: 10px;
             padding: 1.25rem;
             margin: 1rem 0;
+            color: #1e293b;
         }
 
         .learning-objectives h4 {
-            color: #059669;
+            color: #047857;
             margin: 0 0 0.75rem 0;
         }
 
         .learning-objectives ul {
             margin: 0;
             padding-left: 1.5rem;
+            color: #1e293b;
         }
 
         .learning-objectives li {
@@ -468,10 +470,99 @@
             </div>
         </div>
         
+        <!-- GWAS Introduction -->
+        <div class="card">
+            <h2>🔬 Genome-Wide Association Studies (GWAS)</h2>
+            <p>
+                Before we can build a PRS, we need to know which genetic variants are associated with a disease
+                and how strong each association is. This is where <strong>Genome-Wide Association Studies (GWAS)</strong> come in.
+            </p>
+
+            <h3>What is a GWAS?</h3>
+            <p>
+                A GWAS is a <strong>case-control study</strong> that scans the entire genome to find genetic variants
+                (SNPs) associated with a disease. Researchers compare the frequency of millions of SNPs between:
+            </p>
+            <ul style="padding-left: 1.5rem; margin: 1rem 0;">
+                <li><strong>Cases:</strong> People with the disease (e.g., 50,000 patients with Type 2 Diabetes)</li>
+                <li><strong>Controls:</strong> People without the disease (e.g., 50,000 healthy individuals)</li>
+            </ul>
+
+            <!-- GWAS Diagram -->
+            <div style="background: #f8fafc; border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0;">
+                <div style="text-align: center; font-weight: 500; margin-bottom: 1rem;">Case-Control Comparison for SNP rs12345 (Allele A vs G)</div>
+                <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <div style="font-weight: 600; color: #dc2626; margin-bottom: 0.5rem;">Cases (Diabetes)</div>
+                        <div style="display: flex; gap: 4px; justify-content: center; flex-wrap: wrap; max-width: 120px;">
+                            <span style="background: #dc2626; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">A</span>
+                            <span style="background: #dc2626; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">A</span>
+                            <span style="background: #dc2626; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">A</span>
+                            <span style="background: #dc2626; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">A</span>
+                            <span style="background: #dc2626; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">A</span>
+                            <span style="background: #dc2626; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">A</span>
+                            <span style="background: #94a3b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">G</span>
+                            <span style="background: #94a3b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">G</span>
+                            <span style="background: #94a3b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">G</span>
+                            <span style="background: #94a3b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">G</span>
+                        </div>
+                        <div style="margin-top: 0.5rem; font-size: 14px;"><strong>60%</strong> carry allele A</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-weight: 600; color: #2563eb; margin-bottom: 0.5rem;">Controls (Healthy)</div>
+                        <div style="display: flex; gap: 4px; justify-content: center; flex-wrap: wrap; max-width: 120px;">
+                            <span style="background: #2563eb; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">A</span>
+                            <span style="background: #2563eb; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">A</span>
+                            <span style="background: #2563eb; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">A</span>
+                            <span style="background: #2563eb; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">A</span>
+                            <span style="background: #94a3b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">G</span>
+                            <span style="background: #94a3b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">G</span>
+                            <span style="background: #94a3b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">G</span>
+                            <span style="background: #94a3b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">G</span>
+                            <span style="background: #94a3b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">G</span>
+                            <span style="background: #94a3b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">G</span>
+                        </div>
+                        <div style="margin-top: 0.5rem; font-size: 14px;"><strong>40%</strong> carry allele A</div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                    <span style="color: #059669; font-weight: 500;">→ Allele A is more frequent in cases → associated with disease</span>
+                </div>
+            </div>
+
+            <h3>The Odds Ratio: Measuring Effect Size</h3>
+            <p>
+                For each SNP, GWAS calculates an <strong>odds ratio (OR)</strong>. Since GWAS is a retrospective
+                case-control study, the odds ratio tells us:
+            </p>
+            <div class="highlight-box">
+                <strong>Interpretation:</strong> The odds of carrying the risk allele are OR times higher in cases
+                compared to controls.
+            </div>
+            <p>
+                For example, if OR = 1.15 for allele A at a particular SNP:
+            </p>
+            <ul style="padding-left: 1.5rem; margin: 1rem 0;">
+                <li>The odds of carrying allele A are <strong>15% higher</strong> in people with the disease</li>
+                <li>Under the rare disease assumption, this approximates: "carriers of allele A have 15% higher odds of developing the disease"</li>
+            </ul>
+            <p>
+                The effect size <strong>β (beta)</strong> used in PRS calculations is the natural log of the odds ratio: <strong>β = ln(OR)</strong>
+            </p>
+
+            <h3>Why Test Millions of SNPs?</h3>
+            <p>
+                Common diseases are influenced by many variants, each with a small effect. A typical GWAS tests
+                <strong>5-10 million SNPs</strong> and may identify hundreds of associated variants. Because we test
+                so many SNPs, we need very large sample sizes (often 100,000+ people) to reliably detect these small effects
+                while accounting for multiple testing.
+            </p>
+        </div>
+
         <!-- How PRS are Built -->
         <div class="card">
-            <h2>🔬 How Are PRS Developed?</h2>
-            
+            <h2>🧮 From GWAS to PRS</h2>
+
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
@@ -490,193 +581,200 @@
                     <div class="step-label">Sum Scores</div>
                 </div>
             </div>
-            
-            <h3>Step 1: GWAS Identifies Associated Variants</h3>
+
+            <h3>Building the Score</h3>
             <p>
-                A genome-wide association study (GWAS) compares cases (e.g., people with diabetes) to controls, 
-                testing millions of SNPs for association. Variants that are significantly more common in cases 
-                are identified along with their <strong>effect sizes (β)</strong>.
+                Once GWAS identifies associated variants and their effect sizes, we can calculate a PRS for any individual:
             </p>
-            
-            <h3>Step 2-4: Calculate Individual Scores</h3>
             <div class="formula">
                 PRS = Σ (β<sub>i</sub> × G<sub>i</sub>)
             </div>
+            <p>Where:</p>
+            <ul style="padding-left: 1.5rem; margin: 1rem 0;">
+                <li><strong>β<sub>i</sub></strong> = effect size (log odds ratio) for SNP i from the GWAS</li>
+                <li><strong>G<sub>i</sub></strong> = number of risk alleles the person carries at SNP i (0, 1, or 2)</li>
+                <li><strong>Σ</strong> = sum across all SNPs included in the score</li>
+            </ul>
             <p>
-                For each person, multiply the effect size (β) of each SNP by the number of risk alleles 
-                they carry (0, 1, or 2), then sum across all SNPs.
+                The result is a single number summarizing an individual's genetic predisposition. Higher scores
+                indicate higher genetic risk.
             </p>
         </div>
         
-        <!-- Interactive Calculator -->
+        <!-- Interactive Calculator & Distribution Side by Side -->
         <div class="card">
             <h2>🧮 Interactive PRS Calculator</h2>
-            <p>Try changing genotypes to see how PRS changes. Each person carries 0, 1, or 2 copies of the risk allele.</p>
-            
-            <div class="calculator">
-                <table class="snp-table">
-                    <thead>
-                        <tr>
-                            <th>SNP</th>
-                            <th>Risk Allele</th>
-                            <th>Effect (β)</th>
-                            <th>Your Genotype</th>
-                            <th>Risk Alleles</th>
-                            <th>Contribution</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>rs12345</td>
-                            <td>A</td>
-                            <td>0.15</td>
-                            <td>
-                                <select id="snp1" onchange="calculatePRS()">
-                                    <option value="0">GG (0)</option>
-                                    <option value="1" selected>AG (1)</option>
-                                    <option value="2">AA (2)</option>
-                                </select>
-                            </td>
-                            <td id="alleles1">1</td>
-                            <td id="contrib1">0.15</td>
-                        </tr>
-                        <tr>
-                            <td>rs67890</td>
-                            <td>T</td>
-                            <td>0.08</td>
-                            <td>
-                                <select id="snp2" onchange="calculatePRS()">
-                                    <option value="0">CC (0)</option>
-                                    <option value="1">CT (1)</option>
-                                    <option value="2" selected>TT (2)</option>
-                                </select>
-                            </td>
-                            <td id="alleles2">2</td>
-                            <td id="contrib2">0.16</td>
-                        </tr>
-                        <tr>
-                            <td>rs11223</td>
-                            <td>G</td>
-                            <td>0.12</td>
-                            <td>
-                                <select id="snp3" onchange="calculatePRS()">
-                                    <option value="0" selected>AA (0)</option>
-                                    <option value="1">AG (1)</option>
-                                    <option value="2">GG (2)</option>
-                                </select>
-                            </td>
-                            <td id="alleles3">0</td>
-                            <td id="contrib3">0.00</td>
-                        </tr>
-                        <tr>
-                            <td>rs44556</td>
-                            <td>C</td>
-                            <td>0.20</td>
-                            <td>
-                                <select id="snp4" onchange="calculatePRS()">
-                                    <option value="0">TT (0)</option>
-                                    <option value="1" selected>CT (1)</option>
-                                    <option value="2">CC (2)</option>
-                                </select>
-                            </td>
-                            <td id="alleles4">1</td>
-                            <td id="contrib4">0.20</td>
-                        </tr>
-                        <tr>
-                            <td>rs78901</td>
-                            <td>A</td>
-                            <td>0.05</td>
-                            <td>
-                                <select id="snp5" onchange="calculatePRS()">
-                                    <option value="0">GG (0)</option>
-                                    <option value="1" selected>AG (1)</option>
-                                    <option value="2">AA (2)</option>
-                                </select>
-                            </td>
-                            <td id="alleles5">1</td>
-                            <td id="contrib5">0.05</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <div class="result-box">
-                    <div class="label">Your Polygenic Risk Score</div>
-                    <div class="score" id="totalPRS">0.56</div>
-                    <div class="label" id="percentileLabel">~65th percentile (above average risk)</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Population Distribution -->
-        <div class="card">
-            <h2>📊 Population Distribution of PRS</h2>
-            <p>
-                PRS values follow a normal distribution in the population. The red line shows where your
-                calculated PRS falls — try changing genotypes in the calculator above to see it move!
-            </p>
+            <p>Try changing genotypes to see how PRS changes and watch the red marker move on the distribution chart!</p>
 
-            <div class="chart-container">
-                <canvas id="distributionChart"></canvas>
-            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;">
+                <!-- Left: Calculator -->
+                <div>
+                    <table class="snp-table">
+                        <thead>
+                            <tr>
+                                <th>SNP</th>
+                                <th>Risk Allele</th>
+                                <th>β</th>
+                                <th>Genotype</th>
+                                <th>Contrib.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>rs12345</td>
+                                <td>A</td>
+                                <td>0.15</td>
+                                <td>
+                                    <select id="snp1" onchange="calculatePRS()">
+                                        <option value="0">GG (0)</option>
+                                        <option value="1" selected>AG (1)</option>
+                                        <option value="2">AA (2)</option>
+                                    </select>
+                                </td>
+                                <td id="contrib1">0.15</td>
+                            </tr>
+                            <tr>
+                                <td>rs67890</td>
+                                <td>T</td>
+                                <td>0.08</td>
+                                <td>
+                                    <select id="snp2" onchange="calculatePRS()">
+                                        <option value="0">CC (0)</option>
+                                        <option value="1">CT (1)</option>
+                                        <option value="2" selected>TT (2)</option>
+                                    </select>
+                                </td>
+                                <td id="contrib2">0.16</td>
+                            </tr>
+                            <tr>
+                                <td>rs11223</td>
+                                <td>G</td>
+                                <td>0.12</td>
+                                <td>
+                                    <select id="snp3" onchange="calculatePRS()">
+                                        <option value="0" selected>AA (0)</option>
+                                        <option value="1">AG (1)</option>
+                                        <option value="2">GG (2)</option>
+                                    </select>
+                                </td>
+                                <td id="contrib3">0.00</td>
+                            </tr>
+                            <tr>
+                                <td>rs44556</td>
+                                <td>C</td>
+                                <td>0.20</td>
+                                <td>
+                                    <select id="snp4" onchange="calculatePRS()">
+                                        <option value="0">TT (0)</option>
+                                        <option value="1" selected>CT (1)</option>
+                                        <option value="2">CC (2)</option>
+                                    </select>
+                                </td>
+                                <td id="contrib4">0.20</td>
+                            </tr>
+                            <tr>
+                                <td>rs78901</td>
+                                <td>A</td>
+                                <td>0.05</td>
+                                <td>
+                                    <select id="snp5" onchange="calculatePRS()">
+                                        <option value="0">GG (0)</option>
+                                        <option value="1" selected>AG (1)</option>
+                                        <option value="2">AA (2)</option>
+                                    </select>
+                                </td>
+                                <td id="contrib5">0.05</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-            <div class="percentile-display">
-                <div class="percentile-card low">
-                    <div>Bottom 10%</div>
-                    <div class="value">0.5-1x</div>
-                    <div>baseline risk</div>
+                    <div class="result-box" style="margin-top: 1rem;">
+                        <div class="label">Your Polygenic Risk Score</div>
+                        <div class="score" id="totalPRS">0.56</div>
+                        <div class="label" id="percentileLabel">~47th percentile (average genetic risk)</div>
+                    </div>
                 </div>
-                <div class="percentile-card avg">
-                    <div>Middle 80%</div>
-                    <div class="value">1-2x</div>
-                    <div>baseline risk</div>
-                </div>
-                <div class="percentile-card high">
-                    <div>Top 10%</div>
-                    <div class="value">2-5x</div>
-                    <div>baseline risk</div>
+
+                <!-- Right: Distribution Chart -->
+                <div>
+                    <h3 style="margin-bottom: 0.5rem;">📊 Population Distribution</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        The red line shows where your PRS falls in the population.
+                    </p>
+                    <div style="height: 250px; position: relative;">
+                        <canvas id="distributionChart"></canvas>
+                    </div>
+
+                    <div class="percentile-display" style="margin-top: 1rem;">
+                        <div class="percentile-card low">
+                            <div>Bottom 10%</div>
+                            <div class="value">0.5-1x</div>
+                            <div>risk</div>
+                        </div>
+                        <div class="percentile-card avg">
+                            <div>Middle 80%</div>
+                            <div class="value">1-2x</div>
+                            <div>risk</div>
+                        </div>
+                        <div class="percentile-card high">
+                            <div>Top 10%</div>
+                            <div class="value">2-5x</div>
+                            <div>risk</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
         <!-- Clinical Applications -->
         <div class="card">
-            <h2>🏥 PRS in Clinical Practice</h2>
-            <p>Several PRS are already being used or piloted in clinical settings:</p>
-            
-            <div class="clinical-grid">
-                <div class="clinical-item">
-                    <h4>🎀 Breast Cancer</h4>
-                    <ul>
-                        <li><strong>BOADICEA/CanRisk</strong>: Integrates PRS with family history</li>
-                        <li>Used in UK NHS for screening decisions</li>
-                        <li>Modifies BRCA1/2 carrier risk estimates</li>
+            <h2>🏥 PRS in Clinical Practice: CanRisk for Breast Cancer</h2>
+            <p>
+                The most clinically validated application of PRS is in <strong>breast cancer risk assessment</strong>.
+                The <strong>CanRisk tool</strong> (implementing the BOADICEA model) is already used in clinical practice
+                in the UK and internationally.
+            </p>
+
+            <div style="background: #fdf2f8; border: 1px solid #fbcfe8; border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0;">
+                <h4 style="color: #be185d; margin: 0 0 1rem 0;">🎀 CanRisk / BOADICEA</h4>
+                <p style="margin-bottom: 1rem;">
+                    <strong>CanRisk</strong> is a web-based tool used by healthcare professionals to calculate an individual's
+                    risk of developing breast and ovarian cancer. It combines multiple risk factors:
+                </p>
+                <ul style="padding-left: 1.5rem; margin: 0.5rem 0;">
+                    <li><strong>Polygenic Risk Score</strong> — aggregating common genetic variants</li>
+                    <li><strong>Rare pathogenic variants</strong> — in genes like BRCA1, BRCA2, PALB2, CHEK2, ATM</li>
+                    <li><strong>Family history</strong> — detailed pedigree information</li>
+                    <li><strong>Lifestyle factors</strong> — BMI, alcohol, hormone use</li>
+                    <li><strong>Clinical factors</strong> — mammographic density, previous biopsies</li>
+                </ul>
+
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #fbcfe8;">
+                    <strong>Clinical Use:</strong>
+                    <ul style="padding-left: 1.5rem; margin: 0.5rem 0;">
+                        <li>Recommended by NICE guidelines for familial breast cancer risk assessment</li>
+                        <li>Incorporated into NCCN guidelines (US)</li>
+                        <li>Used to determine eligibility for enhanced screening (e.g., MRI) or genetic testing</li>
+                        <li>Estonia is implementing PRS-based risk-stratified breast cancer screening nationally (starting 2025)</li>
                     </ul>
                 </div>
-                <div class="clinical-item">
-                    <h4>❤️ Coronary Artery Disease</h4>
-                    <ul>
-                        <li>GPS identifies individuals at >3x risk</li>
-                        <li>Guides statin therapy decisions</li>
-                        <li>Useful when family history is incomplete</li>
-                    </ul>
-                </div>
-                <div class="clinical-item">
-                    <h4>🔬 Prostate Cancer</h4>
-                    <ul>
-                        <li>Improves PSA screening specificity</li>
-                        <li>PROFILE study in UK</li>
-                        <li>Identifies men for earlier screening</li>
-                    </ul>
-                </div>
-                <div class="clinical-item">
-                    <h4>🩸 Type 2 Diabetes</h4>
-                    <ul>
-                        <li>Identifies high-risk individuals early</li>
-                        <li>Guides lifestyle interventions</li>
-                        <li>Commercial tests available</li>
-                    </ul>
+
+                <div style="margin-top: 1rem; font-size: 0.9rem; color: #6b7280;">
+                    <strong>Note:</strong> CanRisk is the first freely accessible cancer risk prediction tool to carry CE marking
+                    (European conformity certification for medical devices).
                 </div>
             </div>
+
+            <h3>Other Emerging Applications</h3>
+            <p>
+                PRS for <strong>coronary artery disease</strong> is also approaching clinical use. Individuals in the top 5%
+                of genetic risk have approximately 3-fold increased risk — similar to having familial hypercholesterolemia.
+                These scores may help guide statin therapy decisions, particularly for patients at intermediate clinical risk.
+            </p>
+            <p style="margin-top: 1rem; color: #6b7280; font-size: 0.9rem;">
+                However, most PRS applications are still in research or pilot phases. Breast cancer remains the most
+                clinically validated use case with established guidelines and tools.
+            </p>
         </div>
         
         <!-- Limitations -->
@@ -732,9 +830,9 @@
         <div class="card references">
             <h2>📚 Further Reading</h2>
             <ul>
-                <li><strong>Torkamani A, et al. (2018)</strong>. The personal and clinical utility of polygenic risk scores. <em>Nature Reviews Genetics</em></li>
-                <li><strong>Khera AV, et al. (2018)</strong>. Genome-wide polygenic scores for common diseases identify individuals with risk equivalent to monogenic mutations. <em>Nature Genetics</em></li>
-                <li><strong>Lewis CM & Vassos E (2020)</strong>. Polygenic risk scores: from research tools to clinical instruments. <em>Genome Medicine</em></li>
+                <li><strong>Torkamani A, et al. (2018)</strong>. The personal and clinical utility of polygenic risk scores. <em>Nature Reviews Genetics</em>. <a href="https://doi.org/10.1038/s41576-018-0018-x" target="_blank" style="color: var(--primary);">doi:10.1038/s41576-018-0018-x</a></li>
+                <li><strong>Khera AV, et al. (2018)</strong>. Genome-wide polygenic scores for common diseases identify individuals with risk equivalent to monogenic mutations. <em>Nature Genetics</em>. <a href="https://doi.org/10.1038/s41588-018-0183-z" target="_blank" style="color: var(--primary);">doi:10.1038/s41588-018-0183-z</a></li>
+                <li><strong>Lewis CM & Vassos E (2020)</strong>. Polygenic risk scores: from research tools to clinical instruments. <em>Genome Medicine</em>. <a href="https://doi.org/10.1186/s13073-020-00742-5" target="_blank" style="color: var(--primary);">doi:10.1186/s13073-020-00742-5</a></li>
             </ul>
         </div>
 
@@ -862,14 +960,13 @@
 
         // Distribution chart
         let distributionChart;
-        let markerPercentile = 50;
+        let markerPercentile = 47;
 
         function calculatePRS() {
             let total = 0;
             for (let i = 1; i <= 5; i++) {
                 const alleles = parseInt(document.getElementById(`snp${i}`).value);
                 const contribution = alleles * effects[i-1];
-                document.getElementById(`alleles${i}`).textContent = alleles;
                 document.getElementById(`contrib${i}`).textContent = contribution.toFixed(2);
                 total += contribution;
             }
@@ -894,7 +991,9 @@
         }
 
         function initDistributionChart() {
-            const ctx = document.getElementById('distributionChart').getContext('2d');
+            const canvas = document.getElementById('distributionChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
 
             // Generate normal distribution data
             const labels = [];
@@ -928,7 +1027,7 @@
                     },
                     scales: {
                         x: {
-                            title: { display: true, text: 'Standardized PRS (z-score)' },
+                            title: { display: true, text: 'PRS (z-score)' },
                             ticks: {
                                 callback: function(val, index) {
                                     return index % 10 === 0 ? this.getLabelForValue(val) : '';
@@ -949,23 +1048,33 @@
                         const xAxis = chart.scales.x;
                         const yAxis = chart.scales.y;
 
-                        // Convert percentile to z-score position
+                        // Convert percentile to z-score, then to data index
                         const zScore = percentileToZ(markerPercentile);
-                        const xPos = xAxis.getPixelForValue(((zScore + 3) / 0.1).toFixed(0));
+                        // z-score ranges from -3 to 3, data indices from 0 to 60
+                        const dataIndex = Math.round((zScore + 3) / 0.1);
+                        const xPos = xAxis.getPixelForValue(dataIndex);
 
+                        // Draw vertical line
                         ctx.save();
                         ctx.beginPath();
-                        ctx.moveTo(xPos, yAxis.top);
+                        ctx.moveTo(xPos, yAxis.top + 25);
                         ctx.lineTo(xPos, yAxis.bottom);
                         ctx.lineWidth = 3;
                         ctx.strokeStyle = '#dc2626';
                         ctx.stroke();
 
-                        // Draw label
+                        // Draw label background
+                        const labelText = `${markerPercentile}th %ile`;
+                        ctx.font = 'bold 12px IBM Plex Sans, sans-serif';
+                        const textWidth = ctx.measureText(labelText).width;
                         ctx.fillStyle = '#dc2626';
-                        ctx.font = 'bold 14px IBM Plex Sans';
+                        ctx.fillRect(xPos - textWidth/2 - 6, yAxis.top + 2, textWidth + 12, 20);
+
+                        // Draw label text
+                        ctx.fillStyle = 'white';
                         ctx.textAlign = 'center';
-                        ctx.fillText(`Your PRS: ${markerPercentile}th %ile`, xPos, yAxis.top - 10);
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(labelText, xPos, yAxis.top + 12);
                         ctx.restore();
                     }
                 }]
