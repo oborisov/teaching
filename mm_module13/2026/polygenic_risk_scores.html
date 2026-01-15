@@ -549,6 +549,11 @@
             <p>
                 The effect size <strong>β (beta)</strong> used in PRS calculations is the natural log of the odds ratio: <strong>β = ln(OR)</strong>
             </p>
+            <p style="color: #6b7280; font-size: 0.9rem; margin-top: 1rem;">
+                <strong>Important:</strong> Odds ratios from GWAS are statistical associations, not deterministic predictions.
+                They approximate disease risk but do not imply causation — a variant associated with a disease may not
+                directly cause it.
+            </p>
 
             <h3>Why Test Millions of SNPs?</h3>
             <p>
@@ -605,6 +610,10 @@
         <div class="card">
             <h2>🧮 Interactive PRS Calculator</h2>
             <p>Try changing genotypes to see how PRS changes and watch the red marker move on the distribution chart!</p>
+            <p style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 6px; padding: 0.75rem; font-size: 0.85rem; color: #0369a1;">
+                <strong>📚 Note:</strong> This is a simplified educational example using only 5 SNPs. Real PRS typically
+                include hundreds to millions of variants, and percentiles are calculated from large population reference datasets.
+            </p>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;">
                 <!-- Left: Calculator -->
@@ -728,124 +737,35 @@
         
         <!-- Clinical Applications -->
         <div class="card">
-            <h2>🏥 PRS in Clinical Practice: CanRisk for Breast Cancer</h2>
+            <h2>🏥 PRS in Clinical Practice</h2>
             <p>
                 The most clinically validated application of PRS is in <strong>breast cancer risk assessment</strong>.
-                The <strong>CanRisk tool</strong> (implementing the BOADICEA v6 model) is used in clinical practice
-                in the UK, Germany, and internationally.
+                Tools like <strong>CanRisk</strong> (based on the BOADICEA model) are already used by healthcare
+                professionals to estimate an individual's cancer risk.
             </p>
 
             <div style="background: #fdf2f8; border: 1px solid #fbcfe8; border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0;">
-                <h4 style="color: #be185d; margin: 0 0 1rem 0;">🎀 CanRisk / BOADICEA v6</h4>
+                <h4 style="color: #be185d; margin: 0 0 1rem 0;">🎀 Example: Breast Cancer Risk Assessment</h4>
                 <p style="margin-bottom: 1rem;">
-                    <strong>CanRisk</strong> is a web-based tool used by healthcare professionals to calculate an individual's
-                    risk of developing breast and ovarian cancer. BOADICEA v6 integrates multiple risk factors:
+                    Modern risk prediction tools combine multiple factors to estimate breast and ovarian cancer risk:
                 </p>
                 <ul style="padding-left: 1.5rem; margin: 0.5rem 0;">
-                    <li><strong>Polygenic Risk Score (PRS)</strong> — aggregating common genetic variants</li>
-                    <li><strong>Rare pathogenic variants</strong> — in genes: BRCA1, BRCA2, PALB2, CHEK2, ATM, RAD51C, RAD51D, BRIP1</li>
-                    <li><strong>Family history</strong> — detailed pedigree information</li>
-                    <li><strong>Mammographic density (MD)</strong> — breast tissue composition</li>
-                    <li><strong>Questionnaire-based risk factors (QRFs)</strong>:
-                        <ul style="padding-left: 1rem; margin: 0.25rem 0; font-size: 0.95rem;">
-                            <li>Reproductive factors (age at menarche, menopause)</li>
-                            <li>Hormonal factors (oral contraceptives, hormone replacement therapy)</li>
-                            <li>Anthropometric data (height, BMI)</li>
-                            <li>Lifestyle factors (alcohol consumption)</li>
-                        </ul>
-                    </li>
+                    <li><strong>Polygenic Risk Score</strong> — aggregating many common genetic variants</li>
+                    <li><strong>Rare pathogenic variants</strong> — in high-risk genes (e.g., BRCA1, BRCA2, PALB2)</li>
+                    <li><strong>Family history</strong> — cancer cases in relatives</li>
+                    <li><strong>Lifestyle and clinical factors</strong> — BMI, mammographic density, hormone use</li>
                 </ul>
-
-                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #fbcfe8;">
-                    <strong>Clinical Use:</strong>
-                    <ul style="padding-left: 1.5rem; margin: 0.5rem 0;">
-                        <li>Recommended by NICE guidelines (UK) for familial breast cancer risk assessment</li>
-                        <li>Incorporated into NCCN guidelines (US)</li>
-                        <li>Used by the <strong>German Consortium for Hereditary Breast and Ovarian Cancer</strong> (Deutsches Konsortium Familiärer Brust- und Eierstockkrebs)</li>
-                        <li>Determines eligibility for intensified early detection programs (MRI, ultrasound)</li>
-                    </ul>
-                </div>
-
-                <div style="margin-top: 1rem; font-size: 0.9rem; color: #6b7280;">
-                    <strong>Note:</strong> CanRisk carries CE marking (European conformity certification for medical devices),
-                    making it the first freely accessible, certified cancer risk prediction tool.
-                </div>
+                <p style="margin-top: 1rem; font-size: 0.95rem;">
+                    By integrating these factors, clinicians can identify individuals at elevated risk who may benefit
+                    from enhanced screening (e.g., earlier or more frequent MRI) or preventive strategies.
+                </p>
             </div>
 
-            <!-- Risk Classification -->
-            <h3>Risk Classification and Screening Thresholds</h3>
-            <p>
-                Clinicians use <strong>10-year risk</strong> rather than lifetime risk for decision-making, as it is
-                more actionable and easier to communicate to patients.
-            </p>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0;">
-                <div style="background: #ecfdf5; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
-                    <div style="font-weight: 600; color: #047857;">Average Risk</div>
-                    <div style="font-size: 0.9rem; margin-top: 0.5rem;">
-                        10-year risk &lt; 3%<br>
-                        <span style="color: #6b7280;">Lifetime risk &lt; 17%</span>
-                    </div>
-                </div>
-                <div style="background: #fef3c7; padding: 1rem; border-radius: 8px; border-left: 4px solid #f59e0b;">
-                    <div style="font-weight: 600; color: #b45309;">Moderate Risk</div>
-                    <div style="font-size: 0.9rem; margin-top: 0.5rem;">
-                        10-year risk 3–8%<br>
-                        <span style="color: #6b7280;">Lifetime risk 17–30%</span>
-                    </div>
-                </div>
-                <div style="background: #fee2e2; padding: 1rem; border-radius: 8px; border-left: 4px solid #ef4444;">
-                    <div style="font-weight: 600; color: #b91c1c;">High Risk</div>
-                    <div style="font-size: 0.9rem; margin-top: 0.5rem;">
-                        10-year risk ≥ 8%<br>
-                        <span style="color: #6b7280;">Lifetime risk ≥ 30%</span>
-                    </div>
-                </div>
+            <div class="highlight-box">
+                <strong>💡 Clinical relevance:</strong> In some countries, clinical guidelines already recommend
+                intensified screening or preventive strategies for individuals with sufficiently elevated genetic risk,
+                especially for breast cancer. The specific thresholds and screening programs vary by country and healthcare system.
             </div>
-
-            <div class="highlight-box" style="margin-top: 1rem;">
-                <strong>🇩🇪 Germany:</strong> Women with a <strong>10-year risk ≥ 5%</strong> or carriers of pathogenic variants in
-                BRCA1/BRCA2 qualify for the <strong>intensified early detection program</strong> (intensiviertes Früherkennungsprogramm),
-                which includes annual MRI and ultrasound examinations.
-            </div>
-
-            <!-- Screening Program -->
-            <h3>Intensified Early Detection Program</h3>
-            <p>For high-risk women in Germany, the recommended screening includes:</p>
-            <table class="snp-table" style="margin: 1rem 0; font-size: 0.9rem;">
-                <thead>
-                    <tr>
-                        <th>Method</th>
-                        <th>Frequency</th>
-                        <th>Start Age</th>
-                        <th>End Age</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>MRI</td>
-                        <td>Annually</td>
-                        <td>25</td>
-                        <td>50–70*</td>
-                    </tr>
-                    <tr>
-                        <td>Ultrasound</td>
-                        <td>Annually (or 6-monthly for BRCA1/2)</td>
-                        <td>25</td>
-                        <td>50–70*</td>
-                    </tr>
-                    <tr>
-                        <td>Mammography</td>
-                        <td>Every 1–2 years</td>
-                        <td>40</td>
-                        <td>50–70*</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p style="font-size: 0.85rem; color: #6b7280;">
-                *End age depends on risk level. From age 50, screening follows general guidelines for average-risk women.
-                Source: German Consortium for Hereditary Breast and Ovarian Cancer.
-            </p>
         </div>
         
         <!-- Limitations -->
