@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polygenic Risk Scores - Interactive Guide</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #059669;
+            --accent: #dc2626;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+        
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+        }
+        
+        .card h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .card h3 {
+            font-size: 1.1rem;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--text);
+        }
+        
+        .highlight-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .formula {
+            font-family: 'IBM Plex Mono', monospace;
+            background: #f1f5f9;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+        
+        /* Interactive PRS Calculator */
+        .calculator {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .snp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .snp-table th {
+            background: #f1f5f9;
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 500;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .snp-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .snp-table select {
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        
+        .result-box {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .result-box .score {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+        
+        .result-box .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 1.5rem 0;
+        }
+        
+        /* Distribution Demo */
+        .slider-group {
+            margin: 1rem 0;
+        }
+        
+        .slider-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .slider-group input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            outline: none;
+            cursor: pointer;
+        }
+        
+        .slider-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+        
+        .percentile-display {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .percentile-card {
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .percentile-card.low {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .percentile-card.avg {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .percentile-card.high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .percentile-card .value {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        /* Clinical Applications Grid */
+        .clinical-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .clinical-item {
+            background: #f8fafc;
+            padding: 1.25rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+        
+        .clinical-item h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .clinical-item ul {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            padding-left: 1.2rem;
+        }
+        
+        .clinical-item li {
+            margin: 0.3rem 0;
+        }
+        
+        /* Limitations */
+        .limitation-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .limitation-item:last-child {
+            border-bottom: none;
+        }
+        
+        .limitation-icon {
+            width: 40px;
+            height: 40px;
+            background: #fee2e2;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        /* Step indicators */
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 40px;
+            right: 40px;
+            height: 3px;
+            background: var(--border);
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-weight: 600;
+        }
+        
+        .step-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Tasks Section Styles */
+        .task-section {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .task-section h2 {
+            color: white;
+        }
+
+        .task-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            color: var(--text);
+        }
+
+        .task-card h3 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        .task-card ol, .task-card ul {
+            padding-left: 1.5rem;
+        }
+
+        .task-card li {
+            margin: 0.5rem 0;
+        }
+
+        .discussion-question {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0.75rem 0;
+            border-left: 3px solid var(--primary);
+        }
+
+        .discussion-question strong {
+            color: var(--primary);
+        }
+
+        /* Multiple Choice Styles */
+        .mc-question {
+            background: #f8fafc;
+            padding: 1.25rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border: 1px solid var(--border);
+        }
+
+        .mc-question h4 {
+            margin: 0 0 1rem 0;
+            color: var(--text);
+        }
+
+        .mc-options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mc-options li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .mc-options li::before {
+            content: attr(data-letter) ")";
+            position: absolute;
+            left: 0;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        /* References */
+        .references {
+            font-size: 0.9rem;
+        }
+
+        .references ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .references li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .references li:last-child {
+            border-bottom: none;
+        }
+
+        /* Learning Objectives */
+        .learning-objectives {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .learning-objectives h4 {
+            color: #059669;
+            margin: 0 0 0.75rem 0;
+        }
+
+        .learning-objectives ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .learning-objectives li {
+            margin: 0.3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🧬 Polygenic Risk Scores</h1>
+        <p>An Interactive Introduction for Molecular Medicine Students</p>
+    </header>
+    
+    <div class="container">
+        <!-- What is PRS -->
+        <div class="card">
+            <h2>📖 What is a Polygenic Risk Score?</h2>
+            <p>
+                Most common diseases are <strong>polygenic</strong>—influenced by hundreds or thousands of genetic variants, 
+                each with a small effect. A <strong>Polygenic Risk Score (PRS)</strong> combines all these small effects 
+                into a single number representing your overall genetic predisposition.
+            </p>
+            <div class="highlight-box">
+                <strong>💡 Key Insight:</strong> While a single variant might increase disease risk by just 1-5%, 
+                the combined effect of many variants can identify individuals with substantially elevated risk.
+            </div>
+        </div>
+        
+        <!-- How PRS are Built -->
+        <div class="card">
+            <h2>🔬 How Are PRS Developed?</h2>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-label">GWAS</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Extract Effects</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Weight × Genotype</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Sum Scores</div>
+                </div>
+            </div>
+            
+            <h3>Step 1: GWAS Identifies Associated Variants</h3>
+            <p>
+                A genome-wide association study (GWAS) compares cases (e.g., people with diabetes) to controls, 
+                testing millions of SNPs for association. Variants that are significantly more common in cases 
+                are identified along with their <strong>effect sizes (β)</strong>.
+            </p>
+            
+            <h3>Step 2-4: Calculate Individual Scores</h3>
+            <div class="formula">
+                PRS = Σ (β<sub>i</sub> × G<sub>i</sub>)
+            </div>
+            <p>
+                For each person, multiply the effect size (β) of each SNP by the number of risk alleles 
+                they carry (0, 1, or 2), then sum across all SNPs.
+            </p>
+        </div>
+        
+        <!-- Interactive Calculator -->
+        <div class="card">
+            <h2>🧮 Interactive PRS Calculator</h2>
+            <p>Try changing genotypes to see how PRS changes. Each person carries 0, 1, or 2 copies of the risk allele.</p>
+            
+            <div class="calculator">
+                <table class="snp-table">
+                    <thead>
+                        <tr>
+                            <th>SNP</th>
+                            <th>Risk Allele</th>
+                            <th>Effect (β)</th>
+                            <th>Your Genotype</th>
+                            <th>Risk Alleles</th>
+                            <th>Contribution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>rs12345</td>
+                            <td>A</td>
+                            <td>0.15</td>
+                            <td>
+                                <select id="snp1" onchange="calculatePRS()">
+                                    <option value="0">GG (0)</option>
+                                    <option value="1" selected>AG (1)</option>
+                                    <option value="2">AA (2)</option>
+                                </select>
+                            </td>
+                            <td id="alleles1">1</td>
+                            <td id="contrib1">0.15</td>
+                        </tr>
+                        <tr>
+                            <td>rs67890</td>
+                            <td>T</td>
+                            <td>0.08</td>
+                            <td>
+                                <select id="snp2" onchange="calculatePRS()">
+                                    <option value="0">CC (0)</option>
+                                    <option value="1">CT (1)</option>
+                                    <option value="2" selected>TT (2)</option>
+                                </select>
+                            </td>
+                            <td id="alleles2">2</td>
+                            <td id="contrib2">0.16</td>
+                        </tr>
+                        <tr>
+                            <td>rs11223</td>
+                            <td>G</td>
+                            <td>0.12</td>
+                            <td>
+                                <select id="snp3" onchange="calculatePRS()">
+                                    <option value="0" selected>AA (0)</option>
+                                    <option value="1">AG (1)</option>
+                                    <option value="2">GG (2)</option>
+                                </select>
+                            </td>
+                            <td id="alleles3">0</td>
+                            <td id="contrib3">0.00</td>
+                        </tr>
+                        <tr>
+                            <td>rs44556</td>
+                            <td>C</td>
+                            <td>0.20</td>
+                            <td>
+                                <select id="snp4" onchange="calculatePRS()">
+                                    <option value="0">TT (0)</option>
+                                    <option value="1" selected>CT (1)</option>
+                                    <option value="2">CC (2)</option>
+                                </select>
+                            </td>
+                            <td id="alleles4">1</td>
+                            <td id="contrib4">0.20</td>
+                        </tr>
+                        <tr>
+                            <td>rs78901</td>
+                            <td>A</td>
+                            <td>0.05</td>
+                            <td>
+                                <select id="snp5" onchange="calculatePRS()">
+                                    <option value="0">GG (0)</option>
+                                    <option value="1" selected>AG (1)</option>
+                                    <option value="2">AA (2)</option>
+                                </select>
+                            </td>
+                            <td id="alleles5">1</td>
+                            <td id="contrib5">0.05</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="result-box">
+                    <div class="label">Your Polygenic Risk Score</div>
+                    <div class="score" id="totalPRS">0.56</div>
+                    <div class="label" id="percentileLabel">~65th percentile (above average risk)</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Population Distribution -->
+        <div class="card">
+            <h2>📊 Population Distribution of PRS</h2>
+            <p>
+                PRS values follow a normal distribution in the population. Use the slider to see where 
+                different individuals fall and how percentile relates to disease risk.
+            </p>
+            
+            <div class="chart-container">
+                <canvas id="distributionChart"></canvas>
+            </div>
+            
+            <div class="slider-group">
+                <label>Move the slider to explore different percentiles:</label>
+                <input type="range" id="percentileSlider" min="1" max="99" value="50" oninput="updateDistribution()">
+            </div>
+            
+            <div class="percentile-display">
+                <div class="percentile-card low">
+                    <div>Bottom 10%</div>
+                    <div class="value">0.5-1x</div>
+                    <div>baseline risk</div>
+                </div>
+                <div class="percentile-card avg">
+                    <div>Middle 80%</div>
+                    <div class="value">1-2x</div>
+                    <div>baseline risk</div>
+                </div>
+                <div class="percentile-card high">
+                    <div>Top 10%</div>
+                    <div class="value">2-5x</div>
+                    <div>baseline risk</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Clinical Applications -->
+        <div class="card">
+            <h2>🏥 PRS in Clinical Practice</h2>
+            <p>Several PRS are already being used or piloted in clinical settings:</p>
+            
+            <div class="clinical-grid">
+                <div class="clinical-item">
+                    <h4>🎀 Breast Cancer</h4>
+                    <ul>
+                        <li><strong>BOADICEA/CanRisk</strong>: Integrates PRS with family history</li>
+                        <li>Used in UK NHS for screening decisions</li>
+                        <li>Modifies BRCA1/2 carrier risk estimates</li>
+                    </ul>
+                </div>
+                <div class="clinical-item">
+                    <h4>❤️ Coronary Artery Disease</h4>
+                    <ul>
+                        <li>GPS identifies individuals at >3x risk</li>
+                        <li>Guides statin therapy decisions</li>
+                        <li>Useful when family history is incomplete</li>
+                    </ul>
+                </div>
+                <div class="clinical-item">
+                    <h4>🔬 Prostate Cancer</h4>
+                    <ul>
+                        <li>Improves PSA screening specificity</li>
+                        <li>PROFILE study in UK</li>
+                        <li>Identifies men for earlier screening</li>
+                    </ul>
+                </div>
+                <div class="clinical-item">
+                    <h4>🩸 Type 2 Diabetes</h4>
+                    <ul>
+                        <li>Identifies high-risk individuals early</li>
+                        <li>Guides lifestyle interventions</li>
+                        <li>Commercial tests available</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Limitations -->
+        <div class="card">
+            <h2>⚠️ Limitations & Challenges</h2>
+            
+            <div class="limitation-item">
+                <div class="limitation-icon">🌍</div>
+                <div>
+                    <strong>Ancestry Bias</strong>
+                    <p>Most GWAS are from European populations. PRS performance drops significantly in non-European groups, risking health disparities.</p>
+                </div>
+            </div>
+            
+            <div class="limitation-item">
+                <div class="limitation-icon">📉</div>
+                <div>
+                    <strong>Missing Heritability</strong>
+                    <p>PRS typically explain only 5-20% of disease heritability. Environmental factors, rare variants, and gene interactions are not captured.</p>
+                </div>
+            </div>
+            
+            <div class="limitation-item">
+                <div class="limitation-icon">❓</div>
+                <div>
+                    <strong>Clinical Utility</strong>
+                    <p>Does knowing your PRS change outcomes? How do we communicate probabilistic risk effectively to patients?</p>
+                </div>
+            </div>
+            
+            <div class="limitation-item">
+                <div class="limitation-icon">⚖️</div>
+                <div>
+                    <strong>Ethical Considerations</strong>
+                    <p>Privacy concerns, potential for genetic discrimination, psychological impact, and equitable access remain important issues.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Summary -->
+        <div class="card">
+            <h2>📝 Key Takeaways</h2>
+            <ol style="padding-left: 1.5rem; line-height: 2;">
+                <li>PRS aggregate many small genetic effects into a single risk estimate</li>
+                <li>GWAS provide the foundation by identifying variants and effect sizes</li>
+                <li>The calculation is additive: PRS = Σ(β × genotype)</li>
+                <li>Clinical applications are emerging in breast cancer, CAD, prostate cancer, and diabetes</li>
+                <li>Important limitations exist: ancestry bias, incomplete risk capture, and clinical utility questions</li>
+            </ol>
+        </div>
+
+        <!-- Further Reading -->
+        <div class="card references">
+            <h2>📚 Further Reading</h2>
+            <ul>
+                <li><strong>Torkamani A, et al. (2018)</strong>. The personal and clinical utility of polygenic risk scores. <em>Nature Reviews Genetics</em></li>
+                <li><strong>Khera AV, et al. (2018)</strong>. Genome-wide polygenic scores for common diseases identify individuals with risk equivalent to monogenic mutations. <em>Nature Genetics</em></li>
+                <li><strong>Lewis CM & Vassos E (2020)</strong>. Polygenic risk scores: from research tools to clinical instruments. <em>Genome Medicine</em></li>
+            </ul>
+        </div>
+
+        <!-- STUDENT TASKS SECTION -->
+        <div class="task-section">
+            <h2>📋 Student Tasks</h2>
+            <p>The following tasks accompany the lecture on GWAS and Polygenic Risk Scores.</p>
+
+            <div class="learning-objectives">
+                <h4>🎯 Learning Objectives</h4>
+                <ul>
+                    <li>Understand the difference between rare (monogenic) and common (polygenic) genetic variants</li>
+                    <li>Explain how GWAS identifies disease-associated variants</li>
+                    <li>Describe how PRS are calculated and interpreted</li>
+                    <li>Recognize limitations and current clinical applications of PRS</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Part A: Discussion Tasks -->
+        <div class="card">
+            <h2>💬 Part A: Classroom Discussion Tasks</h2>
+            <p>These tasks are meant for group discussion or individual reflection. The goal is to think critically about the concepts.</p>
+
+            <!-- Task A1 -->
+            <div class="task-card">
+                <h3>Task A1: Rare vs. Common Variants</h3>
+                <p>In the first part of today's lecture, you learned about <strong>monogenic kidney diseases</strong> like Alport syndrome, where a single rare variant with a large effect causes disease.</p>
+                <p>Now consider <strong>Type 2 Diabetes</strong> or <strong>Coronary Artery Disease</strong>, where hundreds of common variants each contribute a tiny amount of risk.</p>
+
+                <div class="discussion-question">
+                    <strong>a)</strong> Why do you think rare disease-causing variants (like in Alport syndrome) are rare in the population, while diabetes-associated variants are common?
+                </div>
+                <div class="discussion-question">
+                    <strong>b)</strong> If a single variant increases diabetes risk by only 1.05-fold (5% increase), why doesn't natural selection remove it from the population?
+                </div>
+                <div class="discussion-question">
+                    <strong>c)</strong> A patient asks: <em>"I have a family history of heart disease. Should I get genetic testing?"</em> — How would your answer differ if you suspect a monogenic condition vs. a polygenic predisposition?
+                </div>
+            </div>
+
+            <!-- Task A2 -->
+            <div class="task-card">
+                <h3>Task A2: Understanding GWAS</h3>
+                <p>A research group wants to identify genetic variants associated with <strong>breast cancer</strong>. They collect DNA from 50,000 women with breast cancer (cases) and 50,000 women without breast cancer (controls).</p>
+
+                <div class="discussion-question">
+                    <strong>a)</strong> The researchers test 5 million SNPs across the genome. Why do they need such a large sample size (100,000 people)?
+                </div>
+                <div class="discussion-question">
+                    <strong>b)</strong> After analysis, they find 300 SNPs significantly associated with breast cancer. Most of these SNPs are in non-coding regions of the genome (not in genes). Why might this be?
+                </div>
+                <div class="discussion-question">
+                    <strong>c)</strong> One SNP (rs12345) shows an odds ratio of 1.08. What does this number mean in plain language?
+                </div>
+                <div class="discussion-question">
+                    <strong>d)</strong> Why can't researchers simply use these 300 SNPs to predict exactly who will get breast cancer?
+                </div>
+            </div>
+
+            <!-- Task A3 -->
+            <div class="task-card">
+                <h3>Task A3: Calculating a Simple PRS</h3>
+                <p>Below is a simplified example with 5 SNPs associated with a hypothetical trait:</p>
+
+                <table class="snp-table" style="margin: 1rem 0;">
+                    <thead>
+                        <tr>
+                            <th>SNP</th>
+                            <th>Risk Allele</th>
+                            <th>Effect (β)</th>
+                            <th>Person's Genotype</th>
+                            <th>Risk Alleles Carried</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>rs001</td><td>A</td><td>0.10</td><td>AG</td><td>1</td></tr>
+                        <tr><td>rs002</td><td>T</td><td>0.15</td><td>TT</td><td>2</td></tr>
+                        <tr><td>rs003</td><td>C</td><td>0.05</td><td>GG</td><td>0</td></tr>
+                        <tr><td>rs004</td><td>G</td><td>0.20</td><td>AG</td><td>1</td></tr>
+                        <tr><td>rs005</td><td>A</td><td>0.08</td><td>AA</td><td>2</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="discussion-question">
+                    <strong>a)</strong> Calculate this person's PRS using the formula: <strong>PRS = Σ (β × number of risk alleles)</strong>
+                </div>
+                <div class="discussion-question">
+                    <strong>b)</strong> The population average PRS for this trait is 0.45, with a standard deviation of 0.15. Is this person above or below average risk? Approximately what percentile might they fall into?
+                </div>
+                <div class="discussion-question">
+                    <strong>c)</strong> If you added 295 more SNPs to this score (making it 300 SNPs total), would you expect the score to become more or less predictive of disease? Why?
+                </div>
+            </div>
+
+            <!-- Task A4 -->
+            <div class="task-card">
+                <h3>Task A4: Limitations and Equity</h3>
+                <p>The <strong>BOADICEA</strong> model is a breast cancer risk prediction tool used in UK clinical practice. It incorporates a PRS derived primarily from studies in European populations.</p>
+
+                <div class="discussion-question">
+                    <strong>a)</strong> A woman of West African ancestry receives a PRS result from BOADICEA. Why might her result be less accurate than for a woman of European ancestry?
+                </div>
+                <div class="discussion-question">
+                    <strong>b)</strong> What are the potential consequences of using European-derived PRS in diverse populations? Think about both individual patients and public health.
+                </div>
+                <div class="discussion-question">
+                    <strong>c)</strong> How might researchers address this limitation in the future?
+                </div>
+                <div class="discussion-question">
+                    <strong>d)</strong> Beyond ancestry, what other factors influence breast cancer risk that are NOT captured by a PRS?
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        Molecular Medicine Course | Polygenic Risk Scores Module
+    </footer>
+    
+    <script>
+        // Effect sizes for the 5 demo SNPs
+        const effects = [0.15, 0.08, 0.12, 0.20, 0.05];
+        
+        function calculatePRS() {
+            let total = 0;
+            for (let i = 1; i <= 5; i++) {
+                const alleles = parseInt(document.getElementById(`snp${i}`).value);
+                const contribution = alleles * effects[i-1];
+                document.getElementById(`alleles${i}`).textContent = alleles;
+                document.getElementById(`contrib${i}`).textContent = contribution.toFixed(2);
+                total += contribution;
+            }
+            document.getElementById('totalPRS').textContent = total.toFixed(2);
+            
+            // Estimate percentile (simplified - based on possible range 0 to 1.20)
+            const maxPossible = effects.reduce((a,b) => a + b*2, 0); // 1.20
+            const percentile = Math.round((total / maxPossible) * 100);
+            let riskLabel = '';
+            if (percentile < 25) riskLabel = 'lower genetic risk';
+            else if (percentile < 75) riskLabel = 'average genetic risk';
+            else riskLabel = 'higher genetic risk';
+            
+            document.getElementById('percentileLabel').textContent = 
+                `~${percentile}th percentile (${riskLabel})`;
+        }
+        
+        // Distribution chart
+        let distributionChart;
+        let markerLine;
+        
+        function initDistributionChart() {
+            const ctx = document.getElementById('distributionChart').getContext('2d');
+            
+            // Generate normal distribution data
+            const labels = [];
+            const data = [];
+            for (let x = -3; x <= 3; x += 0.1) {
+                labels.push(x.toFixed(1));
+                data.push(Math.exp(-0.5 * x * x) / Math.sqrt(2 * Math.PI));
+            }
+            
+            distributionChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Population Distribution',
+                        data: data,
+                        fill: true,
+                        backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                        borderColor: 'rgba(37, 99, 235, 1)',
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Standardized PRS (z-score)' },
+                            ticks: {
+                                callback: function(val, index) {
+                                    return index % 10 === 0 ? this.getLabelForValue(val) : '';
+                                }
+                            }
+                        },
+                        y: {
+                            title: { display: true, text: 'Frequency' },
+                            beginAtZero: true
+                        }
+                    },
+                    animation: false
+                },
+                plugins: [{
+                    id: 'verticalLine',
+                    afterDraw: function(chart) {
+                        if (typeof markerLine !== 'undefined') {
+                            const ctx = chart.ctx;
+                            const xAxis = chart.scales.x;
+                            const yAxis = chart.scales.y;
+                            
+                            // Convert percentile to z-score position
+                            const zScore = percentileToZ(markerLine);
+                            const xPos = xAxis.getPixelForValue(((zScore + 3) / 0.1).toFixed(0));
+                            
+                            ctx.save();
+                            ctx.beginPath();
+                            ctx.moveTo(xPos, yAxis.top);
+                            ctx.lineTo(xPos, yAxis.bottom);
+                            ctx.lineWidth = 3;
+                            ctx.strokeStyle = '#dc2626';
+                            ctx.stroke();
+                            
+                            // Draw label
+                            ctx.fillStyle = '#dc2626';
+                            ctx.font = 'bold 14px IBM Plex Sans';
+                            ctx.textAlign = 'center';
+                            ctx.fillText(`${markerLine}th %ile`, xPos, yAxis.top - 10);
+                            ctx.restore();
+                        }
+                    }
+                }]
+            });
+            
+            markerLine = 50;
+        }
+        
+        function percentileToZ(p) {
+            // Approximation of inverse normal CDF
+            if (p <= 0) return -3;
+            if (p >= 100) return 3;
+            const p_adj = p / 100;
+            // Simple approximation
+            const a = [0, -3.969683028665376, 2.209460984245205, -0.6938586148432887];
+            const b = [-0.3535533905932738, 3.892917701904848, -2.692355775777723, 0.07972375199999999];
+            
+            const t = p_adj < 0.5 ? Math.sqrt(-2 * Math.log(p_adj)) : Math.sqrt(-2 * Math.log(1 - p_adj));
+            const sign = p_adj < 0.5 ? -1 : 1;
+            
+            let z = sign * (t - (a[1] + a[2]*t + a[3]*t*t) / (1 + b[1]*t + b[2]*t*t + b[3]*t*t*t));
+            return Math.max(-3, Math.min(3, z));
+        }
+        
+        function updateDistribution() {
+            markerLine = parseInt(document.getElementById('percentileSlider').value);
+            distributionChart.update();
+        }
+        
+        // Initialize on load
+        window.onload = function() {
+            calculatePRS();
+            initDistributionChart();
+        };
+    </script>
+</body>
+</html>

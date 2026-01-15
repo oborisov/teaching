@@ -1,0 +1,15 @@
+# Exclude solution files from all directories
+**/*_solutions.md
+**/*_solutions.html
+**/solutions.md
+**/solutions.html
+
+# Exclude exam files (questions with answers)
+**/*_exam.md
+**/*_exam.html
+**/exam.md
+**/exam.html
+
+# Catch-all patterns for sensitive files
+**/*solution*
+**/*exam*
