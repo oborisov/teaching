@@ -771,31 +771,23 @@
         <!-- Limitations -->
         <div class="card">
             <h2>⚠️ Limitations & Challenges</h2>
-            
-            <div class="limitation-item">
-                <div class="limitation-icon">🌍</div>
-                <div>
-                    <strong>Ancestry Bias</strong>
-                    <p>Most GWAS are from European populations. PRS performance drops significantly in non-European groups, risking health disparities.</p>
-                </div>
-            </div>
-            
+
             <div class="limitation-item">
                 <div class="limitation-icon">📉</div>
                 <div>
                     <strong>Missing Heritability</strong>
-                    <p>PRS typically explain only 5-20% of disease heritability. Environmental factors, rare variants, and gene interactions are not captured.</p>
+                    <p>PRS typically explain only 5–20% of disease heritability. Environmental factors, rare variants, and gene interactions are not fully captured.</p>
                 </div>
             </div>
-            
+
             <div class="limitation-item">
                 <div class="limitation-icon">❓</div>
                 <div>
                     <strong>Clinical Utility</strong>
-                    <p>Does knowing your PRS change outcomes? How do we communicate probabilistic risk effectively to patients?</p>
+                    <p>Does knowing your PRS change health outcomes? How should probabilistic risk information be communicated to patients?</p>
                 </div>
             </div>
-            
+
             <div class="limitation-item">
                 <div class="limitation-icon">⚖️</div>
                 <div>
@@ -803,8 +795,16 @@
                     <p>Privacy concerns, potential for genetic discrimination, psychological impact, and equitable access remain important issues.</p>
                 </div>
             </div>
+
+            <div class="limitation-item">
+                <div class="limitation-icon">🧬</div>
+                <div>
+                    <strong>Population Differences</strong>
+                    <p>GWAS are conducted in specific populations with particular genetic backgrounds. PRS accuracy may vary when applied to individuals from different populations.</p>
+                </div>
+            </div>
         </div>
-        
+
         <!-- Summary -->
         <div class="card">
             <h2>📝 Key Takeaways</h2>
@@ -812,8 +812,8 @@
                 <li>PRS aggregate many small genetic effects into a single risk estimate</li>
                 <li>GWAS provide the foundation by identifying variants and effect sizes</li>
                 <li>The calculation is additive: PRS = Σ(β × genotype)</li>
-                <li>Clinical applications are emerging in breast cancer, CAD, prostate cancer, and diabetes</li>
-                <li>Important limitations exist: ancestry bias, incomplete risk capture, and clinical utility questions</li>
+                <li>Clinical applications are emerging, particularly for breast cancer risk assessment</li>
+                <li>Important limitations remain, including incomplete heritability capture and questions about clinical utility</li>
             </ol>
         </div>
 
@@ -845,48 +845,45 @@
 
         <!-- Part A: Discussion Tasks -->
         <div class="card">
-            <h2>💬 Part A: Classroom Discussion Tasks</h2>
-            <p>These tasks are meant for group discussion or individual reflection. The goal is to think critically about the concepts.</p>
+            <h2>💬 Classroom Discussion Tasks</h2>
+            <p>These tasks are meant for group discussion or individual reflection. The goal is to think critically about the concepts covered in this module.</p>
 
-            <!-- Task A1 -->
+            <!-- Task 1 -->
             <div class="task-card">
-                <h3>Task A1: Rare vs. Common Variants</h3>
-                <p>In the first part of today's lecture, you learned about <strong>monogenic kidney diseases</strong> like Alport syndrome, where a single rare variant with a large effect causes disease.</p>
-                <p>Now consider <strong>Type 2 Diabetes</strong> or <strong>Coronary Artery Disease</strong>, where hundreds of common variants each contribute a tiny amount of risk.</p>
+                <h3>Task 1: Rare vs. Common Variants</h3>
+                <p>In the first part of today's lecture, you learned about <strong>monogenic diseases</strong> like Alport syndrome, where a single rare variant with a large effect causes disease.</p>
+                <p>Now consider <strong>Type 2 Diabetes</strong> or <strong>Coronary Artery Disease</strong>, where hundreds of common variants each contribute a small amount of risk.</p>
 
                 <div class="discussion-question">
-                    <strong>a)</strong> Why do you think rare disease-causing variants (like in Alport syndrome) are rare in the population, while diabetes-associated variants are common?
+                    <strong>a)</strong> Why do you think rare disease-causing variants are rare in the population, while variants associated with common diseases like diabetes are common?
                 </div>
                 <div class="discussion-question">
-                    <strong>b)</strong> If a single variant increases diabetes risk by only 1.05-fold (5% increase), why doesn't natural selection remove it from the population?
+                    <strong>b)</strong> If a single variant increases diabetes risk by only 5%, why doesn't natural selection remove it from the population?
                 </div>
                 <div class="discussion-question">
                     <strong>c)</strong> A patient asks: <em>"I have a family history of heart disease. Should I get genetic testing?"</em> — How would your answer differ if you suspect a monogenic condition vs. a polygenic predisposition?
                 </div>
             </div>
 
-            <!-- Task A2 -->
+            <!-- Task 2 -->
             <div class="task-card">
-                <h3>Task A2: Understanding GWAS</h3>
+                <h3>Task 2: Understanding GWAS</h3>
                 <p>A research group wants to identify genetic variants associated with <strong>breast cancer</strong>. They collect DNA from 50,000 women with breast cancer (cases) and 50,000 women without breast cancer (controls).</p>
 
                 <div class="discussion-question">
                     <strong>a)</strong> The researchers test 5 million SNPs across the genome. Why do they need such a large sample size (100,000 people)?
                 </div>
                 <div class="discussion-question">
-                    <strong>b)</strong> After analysis, they find 300 SNPs significantly associated with breast cancer. Most of these SNPs are in non-coding regions of the genome (not in genes). Why might this be?
+                    <strong>b)</strong> One SNP shows an odds ratio of 1.08. What does this number mean? Remember that GWAS provides statistical associations, not deterministic predictions.
                 </div>
                 <div class="discussion-question">
-                    <strong>c)</strong> One SNP (rs12345) shows an odds ratio of 1.08. What does this number mean in plain language?
-                </div>
-                <div class="discussion-question">
-                    <strong>d)</strong> Why can't researchers simply use these 300 SNPs to predict exactly who will get breast cancer?
+                    <strong>c)</strong> After analysis, they find 300 SNPs significantly associated with breast cancer. Why can't researchers simply use these SNPs to predict exactly who will get breast cancer?
                 </div>
             </div>
 
-            <!-- Task A3 -->
+            <!-- Task 3 -->
             <div class="task-card">
-                <h3>Task A3: Calculating a Simple PRS</h3>
+                <h3>Task 3: Calculating and Interpreting PRS</h3>
                 <p>Below is a simplified example with 5 SNPs associated with a hypothetical trait:</p>
 
                 <table class="snp-table" style="margin: 1rem 0;">
@@ -896,7 +893,7 @@
                             <th>Risk Allele</th>
                             <th>Effect (β)</th>
                             <th>Person's Genotype</th>
-                            <th>Risk Alleles Carried</th>
+                            <th>Risk Alleles</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -912,29 +909,23 @@
                     <strong>a)</strong> Calculate this person's PRS using the formula: <strong>PRS = Σ (β × number of risk alleles)</strong>
                 </div>
                 <div class="discussion-question">
-                    <strong>b)</strong> The population average PRS for this trait is 0.45, with a standard deviation of 0.15. Is this person above or below average risk? Approximately what percentile might they fall into?
+                    <strong>b)</strong> The population average PRS is 0.45 with a standard deviation of 0.15. Is this person above or below average risk? Approximately what percentile might they fall into?
                 </div>
                 <div class="discussion-question">
-                    <strong>c)</strong> If you added 295 more SNPs to this score (making it 300 SNPs total), would you expect the score to become more or less predictive of disease? Why?
+                    <strong>c)</strong> A patient receives a PRS result indicating "average genetic risk." Does this mean they will not develop the disease? How would you explain this to a patient?
                 </div>
             </div>
 
-            <!-- Task A4 -->
-            <div class="task-card">
-                <h3>Task A4: Limitations and Equity</h3>
-                <p>The <strong>BOADICEA</strong> model is a breast cancer risk prediction tool used in UK clinical practice. It incorporates a PRS derived primarily from studies in European populations.</p>
+            <!-- Backup Task (optional) -->
+            <div class="task-card" style="border-left: 4px solid #94a3b8;">
+                <h3>Backup Task: Limitations of PRS</h3>
+                <p><em>Optional discussion topic if time permits.</em></p>
 
                 <div class="discussion-question">
-                    <strong>a)</strong> A woman of West African ancestry receives a PRS result from BOADICEA. Why might her result be less accurate than for a woman of European ancestry?
+                    <strong>a)</strong> PRS typically capture only 5–20% of disease heritability. What factors might explain the remaining heritability that PRS do not capture?
                 </div>
                 <div class="discussion-question">
-                    <strong>b)</strong> What are the potential consequences of using European-derived PRS in diverse populations? Think about both individual patients and public health.
-                </div>
-                <div class="discussion-question">
-                    <strong>c)</strong> How might researchers address this limitation in the future?
-                </div>
-                <div class="discussion-question">
-                    <strong>d)</strong> Beyond ancestry, what other factors influence breast cancer risk that are NOT captured by a PRS?
+                    <strong>b)</strong> Beyond genetics, what other factors influence disease risk that are NOT captured by a PRS?
                 </div>
             </div>
         </div>
