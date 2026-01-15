@@ -10,7 +10,7 @@ Teaching materials repository for bioinformatics and molecular medicine courses.
 
 - **GitHub Pages**: Enabled, serving from `main` branch
 - **Jekyll**: Disabled via `.nojekyll` file (serving static HTML directly)
-- **Sensitive files**: Exam questions and solutions are gitignored (`**/*exam*`, `**/*solution*`)
+- **Sensitive files**: Exam questions are gitignored (`**/*exam*`, `**/*solution*`)
 
 ## Work Completed
 
@@ -19,11 +19,17 @@ Teaching materials repository for bioinformatics and molecular medicine courses.
 - Initialized fresh git repository
 - Created interactive PRS teaching module (`mm_module13/2026/polygenic_risk_scores.html`):
   - Educational content on GWAS and Polygenic Risk Scores
-  - Interactive PRS calculator (students can modify genotypes)
-  - Population distribution chart with percentile slider
-  - Clinical applications and limitations sections
-  - Discussion tasks for classroom use
-- Set up `.gitignore` to exclude exam questions and solutions from version control
+  - Interactive PRS calculator with linked distribution chart
+  - Clinical applications section (breast cancer risk assessment with BOADICEA/CanRisk)
+  - Limitations section (missing heritability, clinical utility, ethical considerations, population differences)
+  - 3 discussion tasks + 1 backup task for classroom use
+  - Password-protected solutions section (password: `prs2026`) — solutions embedded in HTML, revealed after class
+  - Z-score and percentile formulas provided for Task 3
+- Simplified content for bachelor-level students:
+  - Removed regulatory/country-specific details
+  - Clarified GWAS odds ratios as statistical associations (not causal)
+  - Added didactic notes where appropriate
+- Set up `.gitignore` to exclude exam questions from version control
 - Configured GitHub Pages with `.nojekyll` for direct HTML serving
 - Organized materials by year (2026 subfolder) for future course iterations
 
@@ -37,7 +43,10 @@ teaching/
 ├── CLAUDE.md           # This file
 └── mm_module13/
     └── 2026/
-        ├── polygenic_risk_scores.html  # Public (GitHub Pages)
-        ├── prs_exam.md                 # Local only (gitignored)
-        └── prs_solutions.md            # Local only (gitignored)
+        ├── polygenic_risk_scores.html  # Public (GitHub Pages) — includes password-protected solutions
+        └── prs_exam.md                 # Local only (gitignored)
 ```
+
+## Password for Solutions
+
+The solutions section in `polygenic_risk_scores.html` is unlocked with password: `prs2026`
