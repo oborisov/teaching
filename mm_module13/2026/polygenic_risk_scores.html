@@ -930,12 +930,82 @@
             </div>
         </div>
 
+        <!-- Password-Protected Solutions Section -->
+        <div class="card" id="solutions-section">
+            <h2>🔐 Solutions</h2>
+            <div id="solutions-locked">
+                <p>Solutions will be available after the classroom discussion.</p>
+                <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 1rem;">
+                    <input type="password" id="solutions-password" placeholder="Enter password"
+                           style="padding: 0.5rem 1rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem;"
+                           onkeypress="if(event.key === 'Enter') unlockSolutions()">
+                    <button onclick="unlockSolutions()"
+                            style="padding: 0.5rem 1rem; background: #2563eb; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+                        Unlock
+                    </button>
+                </div>
+                <p id="password-error" style="color: #dc2626; margin-top: 0.5rem; display: none;">Incorrect password</p>
+            </div>
+            <div id="solutions-content" style="display: none;">
+
+                <div class="solution-block" style="background: #f0fdf4; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #22c55e;">
+                    <h3 style="color: #166534; margin-top: 0;">Task 1: Rare vs. Common Variants</h3>
+                    <p><strong>a)</strong> Rare variants are rare because of <strong>selection pressure</strong>. Variants causing severe early-onset disease reduce reproductive fitness, so they remain rare. Common variants associated with diabetes or heart disease typically have very small effects and often manifest late in life (after reproduction), so selection pressure is weak.</p>
+                    <p><strong>b)</strong> <strong>Small effect + late onset = weak selection.</strong> A 5% risk increase for a disease that typically appears at age 50–60 has minimal impact on reproductive success. Some risk alleles may have been neutral or even beneficial in ancestral environments.</p>
+                    <p><strong>c)</strong> <strong>Monogenic suspicion</strong> (early onset, clear family pattern, severe phenotype): Targeted genetic testing can identify the causal variant → clear yes/no answer, high clinical actionability. <strong>Polygenic predisposition</strong> (common disease, typical age of onset, no clear Mendelian pattern): PRS gives a probability, not a diagnosis → less clear-cut, lifestyle and traditional risk factors often more actionable.</p>
+                </div>
+
+                <div class="solution-block" style="background: #f0fdf4; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #22c55e;">
+                    <h3 style="color: #166534; margin-top: 0;">Task 2: Understanding GWAS</h3>
+                    <p><strong>a)</strong> Large samples are needed to detect small effects. Each common variant contributes only a tiny amount of risk (often OR = 1.05–1.20). With millions of tests, there's also a massive multiple testing burden — many observations are needed to distinguish true signals from noise.</p>
+                    <p><strong>b)</strong> The odds ratio of 1.08 indicates that individuals carrying the risk allele have <strong>8% higher odds</strong> of developing the disease compared to those without. This is a statistical association — it does not mean the variant causes disease or that carriers will definitely become affected.</p>
+                    <p><strong>c)</strong> <strong>PRS is probabilistic, not deterministic:</strong> Each variant has a tiny effect; even hundreds of variants combined explain only part of genetic risk. Environmental and lifestyle factors are not captured. Many people with high PRS never develop disease; many with low PRS do.</p>
+                </div>
+
+                <div class="solution-block" style="background: #f0fdf4; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #22c55e;">
+                    <h3 style="color: #166534; margin-top: 0;">Task 3: Calculating and Interpreting PRS</h3>
+                    <p><strong>a) PRS Calculation:</strong></p>
+                    <table style="width: 100%; border-collapse: collapse; margin: 0.5rem 0;">
+                        <tr style="background: #dcfce7;"><th style="padding: 0.5rem; border: 1px solid #86efac;">SNP</th><th style="padding: 0.5rem; border: 1px solid #86efac;">β</th><th style="padding: 0.5rem; border: 1px solid #86efac;">Risk Alleles</th><th style="padding: 0.5rem; border: 1px solid #86efac;">Contribution</th></tr>
+                        <tr><td style="padding: 0.5rem; border: 1px solid #86efac;">rs001</td><td style="padding: 0.5rem; border: 1px solid #86efac;">0.10</td><td style="padding: 0.5rem; border: 1px solid #86efac;">1</td><td style="padding: 0.5rem; border: 1px solid #86efac;">0.10</td></tr>
+                        <tr><td style="padding: 0.5rem; border: 1px solid #86efac;">rs002</td><td style="padding: 0.5rem; border: 1px solid #86efac;">0.15</td><td style="padding: 0.5rem; border: 1px solid #86efac;">2</td><td style="padding: 0.5rem; border: 1px solid #86efac;">0.30</td></tr>
+                        <tr><td style="padding: 0.5rem; border: 1px solid #86efac;">rs003</td><td style="padding: 0.5rem; border: 1px solid #86efac;">0.05</td><td style="padding: 0.5rem; border: 1px solid #86efac;">0</td><td style="padding: 0.5rem; border: 1px solid #86efac;">0.00</td></tr>
+                        <tr><td style="padding: 0.5rem; border: 1px solid #86efac;">rs004</td><td style="padding: 0.5rem; border: 1px solid #86efac;">0.20</td><td style="padding: 0.5rem; border: 1px solid #86efac;">1</td><td style="padding: 0.5rem; border: 1px solid #86efac;">0.20</td></tr>
+                        <tr><td style="padding: 0.5rem; border: 1px solid #86efac;">rs005</td><td style="padding: 0.5rem; border: 1px solid #86efac;">0.08</td><td style="padding: 0.5rem; border: 1px solid #86efac;">2</td><td style="padding: 0.5rem; border: 1px solid #86efac;">0.16</td></tr>
+                        <tr style="font-weight: bold;"><td style="padding: 0.5rem; border: 1px solid #86efac;" colspan="3">Total PRS</td><td style="padding: 0.5rem; border: 1px solid #86efac;">0.76</td></tr>
+                    </table>
+                    <p><strong>b)</strong> Z-score = (0.76 - 0.45) / 0.15 = <strong>2.07</strong> → approximately <strong>98th percentile</strong>. This person is above average risk — in the top few percent of genetic predisposition.</p>
+                    <p><strong>c)</strong> No. An "average" PRS means the person's genetic predisposition is similar to most people — it does not guarantee they will or will not develop the disease. Many factors beyond genetics influence disease risk. PRS provides information about relative genetic predisposition, not a definitive prediction.</p>
+                </div>
+
+                <div class="solution-block" style="background: #fefce8; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #eab308;">
+                    <h3 style="color: #854d0e; margin-top: 0;">Backup Task: Limitations of PRS</h3>
+                    <p><strong>a)</strong> Factors explaining remaining heritability: Rare variants with larger effects not captured by common SNP arrays; gene-gene interactions (epistasis); gene-environment interactions; structural variants (deletions, duplications); epigenetic factors.</p>
+                    <p><strong>b)</strong> Non-genetic factors: Lifestyle (diet, exercise, smoking, alcohol); environmental exposures; age; socioeconomic factors; access to healthcare; random biological variation.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <footer>
         Molecular Medicine Course | Polygenic Risk Scores Module
     </footer>
-    
+
+    <script>
+        // Password unlock function
+        function unlockSolutions() {
+            const password = document.getElementById('solutions-password').value;
+            if (password === 'prs2026') {
+                document.getElementById('solutions-locked').style.display = 'none';
+                document.getElementById('solutions-content').style.display = 'block';
+            } else {
+                document.getElementById('password-error').style.display = 'block';
+                document.getElementById('solutions-password').value = '';
+            }
+        }
+    </script>
+
     <script>
         // Effect sizes for the 5 demo SNPs
         const effects = [0.15, 0.08, 0.12, 0.20, 0.05];
