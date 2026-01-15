@@ -611,19 +611,14 @@
         <div class="card">
             <h2>📊 Population Distribution of PRS</h2>
             <p>
-                PRS values follow a normal distribution in the population. Use the slider to see where 
-                different individuals fall and how percentile relates to disease risk.
+                PRS values follow a normal distribution in the population. The red line shows where your
+                calculated PRS falls — try changing genotypes in the calculator above to see it move!
             </p>
-            
+
             <div class="chart-container">
                 <canvas id="distributionChart"></canvas>
             </div>
-            
-            <div class="slider-group">
-                <label>Move the slider to explore different percentiles:</label>
-                <input type="range" id="percentileSlider" min="1" max="99" value="50" oninput="updateDistribution()">
-            </div>
-            
+
             <div class="percentile-display">
                 <div class="percentile-card low">
                     <div>Bottom 10%</div>
@@ -864,7 +859,11 @@
     <script>
         // Effect sizes for the 5 demo SNPs
         const effects = [0.15, 0.08, 0.12, 0.20, 0.05];
-        
+
+        // Distribution chart
+        let distributionChart;
+        let markerPercentile = 50;
+
         function calculatePRS() {
             let total = 0;
             for (let i = 1; i <= 5; i++) {
@@ -875,7 +874,7 @@
                 total += contribution;
             }
             document.getElementById('totalPRS').textContent = total.toFixed(2);
-            
+
             // Estimate percentile (simplified - based on possible range 0 to 1.20)
             const maxPossible = effects.reduce((a,b) => a + b*2, 0); // 1.20
             const percentile = Math.round((total / maxPossible) * 100);
@@ -883,18 +882,20 @@
             if (percentile < 25) riskLabel = 'lower genetic risk';
             else if (percentile < 75) riskLabel = 'average genetic risk';
             else riskLabel = 'higher genetic risk';
-            
-            document.getElementById('percentileLabel').textContent = 
+
+            document.getElementById('percentileLabel').textContent =
                 `~${percentile}th percentile (${riskLabel})`;
+
+            // Update the distribution chart marker
+            markerPercentile = percentile;
+            if (distributionChart) {
+                distributionChart.update();
+            }
         }
-        
-        // Distribution chart
-        let distributionChart;
-        let markerLine;
-        
+
         function initDistributionChart() {
             const ctx = document.getElementById('distributionChart').getContext('2d');
-            
+
             // Generate normal distribution data
             const labels = [];
             const data = [];
@@ -902,7 +903,7 @@
                 labels.push(x.toFixed(1));
                 data.push(Math.exp(-0.5 * x * x) / Math.sqrt(2 * Math.PI));
             }
-            
+
             distributionChart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -944,37 +945,33 @@
                 plugins: [{
                     id: 'verticalLine',
                     afterDraw: function(chart) {
-                        if (typeof markerLine !== 'undefined') {
-                            const ctx = chart.ctx;
-                            const xAxis = chart.scales.x;
-                            const yAxis = chart.scales.y;
-                            
-                            // Convert percentile to z-score position
-                            const zScore = percentileToZ(markerLine);
-                            const xPos = xAxis.getPixelForValue(((zScore + 3) / 0.1).toFixed(0));
-                            
-                            ctx.save();
-                            ctx.beginPath();
-                            ctx.moveTo(xPos, yAxis.top);
-                            ctx.lineTo(xPos, yAxis.bottom);
-                            ctx.lineWidth = 3;
-                            ctx.strokeStyle = '#dc2626';
-                            ctx.stroke();
-                            
-                            // Draw label
-                            ctx.fillStyle = '#dc2626';
-                            ctx.font = 'bold 14px IBM Plex Sans';
-                            ctx.textAlign = 'center';
-                            ctx.fillText(`${markerLine}th %ile`, xPos, yAxis.top - 10);
-                            ctx.restore();
-                        }
+                        const ctx = chart.ctx;
+                        const xAxis = chart.scales.x;
+                        const yAxis = chart.scales.y;
+
+                        // Convert percentile to z-score position
+                        const zScore = percentileToZ(markerPercentile);
+                        const xPos = xAxis.getPixelForValue(((zScore + 3) / 0.1).toFixed(0));
+
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.moveTo(xPos, yAxis.top);
+                        ctx.lineTo(xPos, yAxis.bottom);
+                        ctx.lineWidth = 3;
+                        ctx.strokeStyle = '#dc2626';
+                        ctx.stroke();
+
+                        // Draw label
+                        ctx.fillStyle = '#dc2626';
+                        ctx.font = 'bold 14px IBM Plex Sans';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(`Your PRS: ${markerPercentile}th %ile`, xPos, yAxis.top - 10);
+                        ctx.restore();
                     }
                 }]
             });
-            
-            markerLine = 50;
         }
-        
+
         function percentileToZ(p) {
             // Approximation of inverse normal CDF
             if (p <= 0) return -3;
@@ -983,23 +980,18 @@
             // Simple approximation
             const a = [0, -3.969683028665376, 2.209460984245205, -0.6938586148432887];
             const b = [-0.3535533905932738, 3.892917701904848, -2.692355775777723, 0.07972375199999999];
-            
+
             const t = p_adj < 0.5 ? Math.sqrt(-2 * Math.log(p_adj)) : Math.sqrt(-2 * Math.log(1 - p_adj));
             const sign = p_adj < 0.5 ? -1 : 1;
-            
+
             let z = sign * (t - (a[1] + a[2]*t + a[3]*t*t) / (1 + b[1]*t + b[2]*t*t + b[3]*t*t*t));
             return Math.max(-3, Math.min(3, z));
         }
-        
-        function updateDistribution() {
-            markerLine = parseInt(document.getElementById('percentileSlider').value);
-            distributionChart.update();
-        }
-        
+
         // Initialize on load
         window.onload = function() {
-            calculatePRS();
             initDistributionChart();
+            calculatePRS();
         };
     </script>
 </body>
