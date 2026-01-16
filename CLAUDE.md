@@ -49,4 +49,4 @@ teaching/
 
 ## Password for Solutions
 
-The solutions section in `polygenic_risk_scores.html` is unlocked with password: `prs2026`
+The solutions section in `polygenic_risk_scores.html` is unlocked by entering the correct PRS value from Task 3a: `0.76`

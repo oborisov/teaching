@@ -939,17 +939,18 @@
         <div class="card" id="solutions-section">
             <h2>🔐 Solutions</h2>
             <div id="solutions-locked">
-                <p>Solutions will be available after the classroom discussion.</p>
+                <p>To unlock the solutions, enter the <strong>PRS value from Task 3a</strong>.</p>
+                <p style="color: #64748b; font-size: 0.9rem;">Format: <code>X.XX</code> (e.g., 0.50)</p>
                 <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 1rem;">
-                    <input type="password" id="solutions-password" placeholder="Enter password"
-                           style="padding: 0.5rem 1rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem;"
+                    <input type="text" id="solutions-password" placeholder="PRS"
+                           style="padding: 0.5rem 1rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; width: 100px;"
                            onkeypress="if(event.key === 'Enter') unlockSolutions()">
                     <button onclick="unlockSolutions()"
                             style="padding: 0.5rem 1rem; background: #2563eb; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem;">
                         Unlock
                     </button>
                 </div>
-                <p id="password-error" style="color: #dc2626; margin-top: 0.5rem; display: none;">Incorrect password</p>
+                <p id="password-error" style="color: #dc2626; margin-top: 0.5rem; display: none;">Incorrect — check your calculation</p>
             </div>
             <div id="solutions-content" style="display: none;">
 
@@ -1001,7 +1002,7 @@
         // Password unlock function
         function unlockSolutions() {
             const password = document.getElementById('solutions-password').value;
-            if (password === 'prs2026') {
+            if (password === '0.76') {
                 document.getElementById('solutions-locked').style.display = 'none';
                 document.getElementById('solutions-content').style.display = 'block';
             } else {
