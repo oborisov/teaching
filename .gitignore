@@ -13,3 +13,4 @@
 # Catch-all patterns for sensitive files
 **/*solution*
 **/*exam*
+**/*password*
